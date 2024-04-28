@@ -1,27 +1,34 @@
 import { useState } from 'react'
 
 const Button = (props) => {
-  return(
+  return (
     <button onClick={props.onClick}>{props.text}</button>
   )
 }
 
 const StatisticLine = (props) => {
-  return(
-      <p>{props.text}: {props.statistic}</p>
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.statistic}</td>
+    </tr>
   )
 }
 
-const Statistics = ({good, neutral, bad, all}) => {
-  return(
+const Statistics = ({ good, neutral, bad, all }) => {
+  return (
     <>
       <h2>Session statistics:</h2>
-      <StatisticLine text="Good" statistic={good} />
-      <StatisticLine text="Neutral" statistic={neutral} />
-      <StatisticLine text="Bad" statistic={bad} />
-      <StatisticLine text="All" statistic={good + neutral + bad} />
-      <StatisticLine text="Average" statistic={all === 0 ? 0 : (good - bad) / all} /> {/*we avoid dividing by all = 0 with an if statement*/}
-      <StatisticLine text="Percentage of positive score" statistic={good / (all === 0 ? 1 : all) * 100 + " %"} /> {/*we avoid dividing by all = 0 using an if statement*/}
+      <table>
+        <tbody>
+          <StatisticLine text="Good" statistic={good} />
+          <StatisticLine text="Neutral" statistic={neutral} />
+          <StatisticLine text="Bad" statistic={bad} />
+          <StatisticLine text="All" statistic={good + neutral + bad} />
+          <StatisticLine text="Average" statistic={all === 0 ? 0 : (good - bad)/all} />
+          <StatisticLine text="Percentage" statistic={good / (all === 0 ? 1 : all) * 100 + "%"} />{/*we avoid dividing by all = 0 using an if statement*/}
+        </tbody>
+      </table>
     </>
   )
 }
@@ -55,9 +62,9 @@ function App() {
       <Button onClick={handleClick.neutral} text="neutral" />
       <Button onClick={handleClick.bad} text="bad" />
       {
-      all === 0 ? 
-      <p>No feedback given</p> : 
-      <Statistics good={good} neutral={neutral} bad={bad} all={all} />
+        all === 0 ?
+          <p>No feedback given</p> :
+          <Statistics good={good} neutral={neutral} bad={bad} all={all} />
       }
     </>
   )
