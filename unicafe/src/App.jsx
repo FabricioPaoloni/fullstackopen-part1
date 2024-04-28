@@ -6,7 +6,7 @@ const Button = (props) => {
   )
 }
 
-const LineStatistics = (props) => {
+const StatisticLine = (props) => {
   return(
       <p>{props.text}: {props.statistic}</p>
   )
@@ -16,12 +16,12 @@ const Statistics = ({good, neutral, bad, all}) => {
   return(
     <>
       <h2>Session statistics:</h2>
-      <LineStatistics text="Good" statistic={good} />
-      <LineStatistics text="Neutral" statistic={neutral} />
-      <LineStatistics text="Bad" statistic={bad} />
-      <LineStatistics text="All" statistic={good + neutral + bad} />
-      <LineStatistics text="Average" statistic={all === 0 ? 0 : (good - bad) / all} /> {/*we avoid dividing by all = 0 with an if statement*/}
-      <LineStatistics text="Percentage of positive score" statistic={good / (all === 0 ? 1 : all) * 100 + " %"} /> {/*we avoid dividing by all = 0 with an if statement*/}
+      <StatisticLine text="Good" statistic={good} />
+      <StatisticLine text="Neutral" statistic={neutral} />
+      <StatisticLine text="Bad" statistic={bad} />
+      <StatisticLine text="All" statistic={good + neutral + bad} />
+      <StatisticLine text="Average" statistic={all === 0 ? 0 : (good - bad) / all} /> {/*we avoid dividing by all = 0 with an if statement*/}
+      <StatisticLine text="Percentage of positive score" statistic={good / (all === 0 ? 1 : all) * 100 + " %"} /> {/*we avoid dividing by all = 0 using an if statement*/}
     </>
   )
 }
