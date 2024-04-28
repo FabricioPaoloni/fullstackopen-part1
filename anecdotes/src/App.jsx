@@ -1,8 +1,17 @@
 import { useState } from 'react'
 
 const Button = (props) => {
-  return(
+  return (
     <button onClick={props.onClick}>{props.text}</button>
+  )
+}
+
+const Anecdote = (props) => {
+  return (
+    <>
+      <p>{props.anecdotes[props.show]}</p>
+      <p>has {props.votes[props.show]} votes</p>
+    </>
   )
 }
 
@@ -17,26 +26,39 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+  const [mostVotedPosition, setMostVotedPosition] = useState(0)
 
   const handleRandomNumber = () => {
     let randomNumber = Math.floor(Math.random() * (anecdotes.length))
     setSelected(randomNumber)
   }
-  const handleVote = () =>{
+
+  const handleVote = () => {
     let copyArray = [...votes]
     copyArray[selected] += 1
     setVotes(copyArray)
+
+    let mostVoted = Math.max(...copyArray)
+    for (let i = 0; i < copyArray.length; i++) {
+      if (copyArray[i] === mostVoted) {
+        setMostVotedPosition(i)
+        break
+      }
+    }
   }
+
 
   return (
     <>
-      <h3>{anecdotes[selected]}</h3>
-      <p>has {votes[selected]} votes</p>
+      <h2>Anecdote of the day:</h2>
+      <Anecdote anecdotes={anecdotes} votes={votes} show={selected} />
       <Button onClick={handleRandomNumber} text="next anecdote" />
       <Button onClick={handleVote} text="vote" />
+      <h2>Most voted anecdote</h2>
+      <Anecdote anecdotes={anecdotes} votes={votes} show={mostVotedPosition} />
     </>
   )
 }
