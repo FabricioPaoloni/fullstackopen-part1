@@ -8,7 +8,7 @@ const Button = (props) => {
 
 const Statistics = (props) => {
   return(
-      <p>{props.text}: {props.feedback}</p>
+      <p>{props.text}: {props.statistic}</p>
   )
 }
 
@@ -16,6 +16,7 @@ function App() {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const all = (good + neutral + bad) === 0 ? 1 : good + neutral + bad
 
   const handleClick = {
     //and object composed of 3 functions: good, neutral and bad used to change each of those states 
@@ -40,9 +41,12 @@ function App() {
       <Button onClick={handleClick.neutral} text="neutral" />
       <Button onClick={handleClick.bad} text="bad" />
       <h2>Session statistics:</h2>
-      <Statistics text="Good" feedback={good} />
-      <Statistics text="Neutral" feedback={neutral} />
-      <Statistics text="Bad" feedback={bad} />
+      <Statistics text="Good" statistic={good} />
+      <Statistics text="Neutral" statistic={neutral} />
+      <Statistics text="Bad" statistic={bad} />
+      <Statistics text="All" statistic={good + neutral + bad} />
+      <Statistics text="Average" statistic={(good - bad) / all} />
+      <Statistics text="Percentage of positive score" statistic={good / all * 100 + " %"} /> 
     </>
   )
 }
